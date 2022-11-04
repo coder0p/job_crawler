@@ -32,7 +32,7 @@ def get_jobs(url, command):
             link = val[2]
             jobs[key.capitalize()] = "Company: "+company_name,"Last date : "+last_date, "Link to apply: "+link
     if jobs:
-        with open("/home/aldrin/Desktop/Job_list.txt", "w", encoding="utf-8") as file:
+        with open("job_list.txt", "w", encoding="utf-8") as file:
             for key, val in jobs.items():
                 print(f"\n{key}: {val}\n\n")
                 file.write(f"{key}: {val} \n\n")
