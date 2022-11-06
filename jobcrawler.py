@@ -1,6 +1,5 @@
 """Small webcrawler app using python to list out the jobs listed on infopark.in"""
 from sys import argv as arg
-
 import requests
 from bs4 import BeautifulSoup
 
@@ -19,14 +18,13 @@ def get_jobs(url, command):
     job_list = {}
     jobs = {}
     for head in heads:
-        designation = head.find_all("div")[1].text
-        date = head.find_all("div")[2].text
+        company_name = head.find_all("div")[1].text
+        dates = head.find_all("div")[2].text
         links = head.a['href']
-        job_list[head.find("a").text] = designation, date, links
+        job_list[head.find("a").text] = company_name, dates, links
 
     for key, val in job_list.items():
-
-        if command in key.lower():
+        if command in key.lower() or command in val[0].lower():
             company_name = val[0].capitalize()
             last_date = val[1]
             link = val[2]
@@ -34,7 +32,7 @@ def get_jobs(url, command):
     if jobs:
         with open("job_list.txt", "w", encoding="utf-8") as file:
             for key, val in jobs.items():
-                print(f"\n{key}: {val}\n\n")
+                print(Fore.CYAN+f"\n{key}: {val}\n\n")
                 file.write(f"{key}: {val} \n\n")
         print(Fore.GREEN + "\nCrawling successfull!\n")
     else:
